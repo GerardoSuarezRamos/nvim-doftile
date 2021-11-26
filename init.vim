@@ -43,10 +43,8 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 let g:highlightedyank_highlight_duration = 25
 
 if has("nvim")
-  let g:plug_home = stdpath('data') . '/plugged'
+  let g:plug_home = stdpath('data') . '/user/gerar/appdata/local/nvim/plugged'
 endif
-
-
 
 " Configuracion Sintax 
 let g:jsx_ext_required = 1
@@ -70,13 +68,6 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 
-" status bar
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-
-" navigation
-Plug 'christoomey/vim-tmux-navigator'
-
 " theme
 Plug 'ayu-theme/ayu-vim'
 
@@ -88,6 +79,13 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/popup.nvim'
 Plug 'tpope/vim-rhubarb'
 
+" tree and tabs
+Plug 'romgrk/barbar.nvim'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'christoomey/vim-tmux-navigator'
+
 " Lsp config
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -95,35 +93,19 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'onsails/lspkind-nvim'
 Plug 'hoob3rt/lualine.nvim'
-Plug 'kristijanhusak/defx-git'
-Plug 'kristijanhusak/defx-icons'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim51' }
 Plug 'L3MON4D3/LuaSnip'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'folke/lsp-colors.nvim'
-Plug 'kristijanhusak/defx-git'
-Plug 'kristijanhusak/defx-icons'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+
 call plug#end()
 
 " theme
 let ayucolor="dark"
 colorscheme ayu
 
-" Status line
-if !exists('*fugitive#statusline')
-  set statusline+=%{fugitive#statusline()}
-endif
-
 cnoreabbrev g Git
 cnoreabbrev gopen GBrowse
-
-" airline config
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="ayu"
-let g:airline_powerline_fonts = 1
 
 " Definicion de leader key
 let mapleader=" "
@@ -179,4 +161,47 @@ telescope.setup{
 }
 EOF
 
+" NerdTree config
+nnoremap <leader>e :NERDTreeFind<CR>
+let NERDTreeShowHidden=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeMapOpenInTab='\t'
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'',
+                \ 'Staged'    :'',
+                \ 'Untracked' :'',
+                \ 'Renamed'   :'',
+                \ 'Unmerged'  :'=',
+                \ 'Deleted'   :'',
+                \ 'Dirty'     :'﯇',
+                \ 'Ignored'   :'',
+                \ 'Clean'     :'',
+                \ 'Unknown'   :'?',
+                \ }
 
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
+
+" BARBAR 
+let bufferline = get(g:, 'bufferline', {})
+" (compatibility with NVIM-TREE)
+let s:treeEnabled=0
+function! ToggleNvimTree()
+	   if s:treeEnabled
+			 lua require('custom.tree').close()
+			 let s:treeEnabled = 0
+	   else
+			 lua require('custom.tree').open()
+			 let s:treeEnabled = 1
+	   endif
+endfunction
+nnoremap <silent><leader>f :call ToggleNvimTree()<cr>
+let bufferline.auto_hide = v:true
+let bufferline.animation = v:true
+let bufferline.no_name_title = "untitled"
