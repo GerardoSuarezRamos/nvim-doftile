@@ -89,6 +89,8 @@ Plug 'folke/lsp-colors.nvim'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+
 
 "Typing
 Plug 'alvan/vim-closetag'
@@ -111,8 +113,8 @@ if exists("&termguicolors") && exists("&winblend")
   set background=dark
   " Use ayu
   "let g:neosolarized_termtrans=1 //  for use neosolarized
-  runtime ./colors/ayuCustom.vim
-  colorscheme ayuCustom
+  runtime ./colors/ayu.vim
+  colorscheme ayu
 endif
 
 
@@ -147,8 +149,8 @@ hi FloatermNC guibg=gray
 
 " prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-nmap <leader>p  <Plug>(coc-format-selected)
-vmap <leader>p  <Plug>(coc-format-selected)
+nmap <leader>q  <Plug>(coc-format-selected)
+vmap <leader>q  <Plug>(coc-format-selected)
 
 " remapings
 " Split window

@@ -274,4 +274,4 @@ hi! link diffAdded String
 
 let &background = s:style
 
-" }}}
+"
