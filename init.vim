@@ -34,11 +34,10 @@ set undofile
 set termguicolors
 set exrc
 set title 
-set smartab
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-let g:highlightedyank_highlight_duration = 25
+let g:highlightedyank_highlight_duration = 50
 
 if has("nvim")
   let g:plug_home = stdpath('data') . '/user/gerar/appdata/local/nvim/plugged'
@@ -53,6 +52,7 @@ let g:user_emmet_mode='a'
 let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx,*.rs'
 
 call plug#begin('~/AppData/Local/nvim/plugged')
+
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
@@ -75,7 +75,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 
 " theme
-Plug 'ayu-theme/ayu-vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 
@@ -102,9 +101,20 @@ call plug#end()
 cnoreabbrev g Git
 cnoreabbrev gopen GBrowse
 
-" theme
-let ayucolor="dark"
-colorscheme ayu
+" true color
+if exists("&termguicolors") && exists("&winblend")
+  syntax enable
+  set termguicolors
+  set winblend=0
+  set wildoptions=pum
+  set pumblend=5
+  set background=dark
+  " Use ayu
+  "let g:neosolarized_termtrans=1 //  for use neosolarized
+  runtime ./colors/ayuCustom.vim
+  colorscheme ayuCustom
+endif
+
 
 " slint fix problems
 autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR>
@@ -135,6 +145,10 @@ hi FloatermBorder guibg=dark guifg=cyan
 hi Floaterm guibg=black
 hi FloatermNC guibg=gray
 
+" prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nmap <leader>p  <Plug>(coc-format-selected)
+vmap <leader>p  <Plug>(coc-format-selected)
 
 " remapings
 " Split window
@@ -155,8 +169,6 @@ nmap <C-w><left> <C-w><
 nmap <C-w><right> <C-w>>
 nmap <C-w><up> <C-w>+
 nmap <C-w><down> <C-w>-
-
-
 
 " NerdTree config
 nnoremap <leader>m :NERDTreeFind<CR>
@@ -187,6 +199,22 @@ let bufferline = get(g:, 'bufferline', {})
 let bufferline.auto_hide = v:true
 let bufferline.animation = v:true
 let bufferline.no_name_title = "untitled"
+" Move to previous/next
+nnoremap <silent>    <A-,> :BufferPrevious<CR>
+nnoremap <silent>    <A-.> :BufferNext<CR>
+" Re-order to previous/next
+nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+nnoremap <silent>    <A->> :BufferMoveNext<CR>
+" Goto buffer in position...
+nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+nnoremap <silent>    <A-9> :BufferLast<CR>
 
 " FZF CONFIGURATION
 let g:fzf_preview_window = ['right:50%', 'ctrl-/']
@@ -206,6 +234,7 @@ command! -bang -nargs=? -complete=dir Files
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>c :Colors<CR>
 nnoremap <leader>l :Lines<CR>
+
 
 
 function! s:fzf_statusline()
