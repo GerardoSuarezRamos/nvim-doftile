@@ -1,3 +1,7 @@
+if has("nvim")
+  let g:plug_home = stdpath('data') . '/user/gerar/appdata/local/nvim/plugged'
+endif
+
 set nocompatible
 set number
 set relativenumber
@@ -35,24 +39,7 @@ set termguicolors
 set exrc
 set title 
 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-let g:highlightedyank_highlight_duration = 50
-
-if has("nvim")
-  let g:plug_home = stdpath('data') . '/user/gerar/appdata/local/nvim/plugged'
-endif
-
-" Configuracion Sintax 
-let g:jsx_ext_required = 1
-highlight Normal ctermbg=NONE
-let g:javascript_plugin_flow = 1
-let g:user_emmet_mode='a'
-" HTML, JSX
-let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx,*.rs'
-
 call plug#begin('~/AppData/Local/nvim/plugged')
-
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
@@ -61,6 +48,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'PhilRunninger/nerdtree-visual-selection'
+
+" indentation 
+Plug 'Yggdroot/indentLine'
+
 
 " FZF 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -74,7 +65,7 @@ Plug 'nvim-lua/popup.nvim'
 " lualine
 Plug 'nvim-lualine/lualine.nvim'
 
-" theme
+" icons
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 
@@ -99,6 +90,22 @@ Plug 'tpope/vim-surround'
 
 call plug#end()
 
+"indent line
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" Configuracion Sintax 
+let  g:vim_jsx_pretty_highlight_close_tag = 1
+let g:vim_jsx_pretty_colorful_config = 1
+highlight Normal ctermbg=NONE
+let g:user_emmet_mode='a'
+
+" close tag 
+let g:closetag_filenames = '*.html,*.js,*.jsx,*.ts,*.tsx,*.rs'
+
+" coc-yank 
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+let g:highlightedyank_highlight_duration = 50
 
 cnoreabbrev g Git
 cnoreabbrev gopen GBrowse
@@ -111,11 +118,22 @@ if exists("&termguicolors") && exists("&winblend")
   set wildoptions=pum
   set pumblend=5
   set background=dark
-  " Use ayu
-  "let g:neosolarized_termtrans=1 //  for use neosolarized
-  runtime ./colors/ayu.vim
-  colorscheme ayu
+  let g:indentLine_char = ''
+  let g:indentLine_first_char = ''
+  let g:indentLine_showFirstIndentLevel = 1
+  let g:indentLine_setColors = 0
+
+  " when i use ayu
+  "let ayucolor= 'dark'
+  
+  " when i use neosolarized
+  let g:neosolarized_termtrans=1 
+  runtime ./colors/NeoSolarized.vim
+  colorscheme NeoSolarized
 endif
+
+" prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 
 " slint fix problems
@@ -146,11 +164,6 @@ let g:floaterm_autoclose=1
 hi FloatermBorder guibg=dark guifg=cyan
 hi Floaterm guibg=black
 hi FloatermNC guibg=gray
-
-" prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-nmap <leader>q  <Plug>(coc-format-selected)
-vmap <leader>q  <Plug>(coc-format-selected)
 
 " remapings
 " Split window
@@ -236,8 +249,6 @@ command! -bang -nargs=? -complete=dir Files
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>c :Colors<CR>
 nnoremap <leader>l :Lines<CR>
-
-
 
 function! s:fzf_statusline()
   " Override statusline as you like
