@@ -42,7 +42,6 @@ set title
 call plug#begin('~/AppData/Local/nvim/plugged')
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
- 
 " nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree'
