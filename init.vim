@@ -51,15 +51,13 @@ Plug 'PhilRunninger/nerdtree-visual-selection'
 " indentation 
 Plug 'Yggdroot/indentLine'
 
-
-" FZF 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 "Floaterm
 Plug 'voldikss/vim-floaterm'
 Plug 'nvim-lua/popup.nvim'
-
 
 " lualine
 Plug 'nvim-lualine/lualine.nvim'
@@ -131,6 +129,7 @@ if exists("&termguicolors") && exists("&winblend")
   colorscheme NeoSolarized
 endif
 
+
 " prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
@@ -185,7 +184,7 @@ nmap <C-w><up> <C-w>+
 nmap <C-w><down> <C-w>-
 
 " NerdTree config
-nnoremap <leader>m :NERDTreeFind<CR>
+nnoremap <leader>m  :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeAutoDeleteBuffer=1
@@ -229,35 +228,6 @@ nnoremap <silent>    <A-6> :BufferGoto 6<CR>
 nnoremap <silent>    <A-7> :BufferGoto 7<CR>
 nnoremap <silent>    <A-8> :BufferGoto 8<CR>
 nnoremap <silent>    <A-9> :BufferLast<CR>
-
-" FZF CONFIGURATION
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
-
-" [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
-command! -bang ProjectFiles call fzf#vim#files('~/projects', <bang>0)
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>c :Colors<CR>
-nnoremap <leader>l :Lines<CR>
-
-function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
