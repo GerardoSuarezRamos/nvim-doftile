@@ -133,6 +133,8 @@ endif
 " prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+" jest 
+command! -nargs=0 Jest :call  CocAction('runCommand', 'jest.projectTest')
 
 " slint fix problems
 autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR>
