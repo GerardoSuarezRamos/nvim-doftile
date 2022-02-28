@@ -89,6 +89,8 @@ Plug 'tpope/vim-surround'
 " rainbow parentheses
 Plug 'frazrepo/vim-rainbow'
 
+"treesitter
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 call plug#end()
 
@@ -115,7 +117,7 @@ if exists("&termguicolors") && exists("&winblend")
   set wildoptions=pum
   set pumblend=5
   set background=dark
- set t_Co=256
+  set t_Co=256
   " when i use ayu
   "let ayucolor= 'dark'
   
