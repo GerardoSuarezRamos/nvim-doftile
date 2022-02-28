@@ -85,6 +85,11 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 
+
+" rainbow parentheses
+Plug 'frazrepo/vim-rainbow'
+
+
 call plug#end()
 
 
@@ -112,21 +117,25 @@ if exists("&termguicolors") && exists("&winblend")
   set background=dark
  set t_Co=256
   " when i use ayu
-  let ayucolor= 'dark'
+  "let ayucolor= 'dark'
   
   " when i use neosolarized
-  "let g:neosolarized_termtrans=1 
-  "let g:neosolarized_italics=1
-  runtime ./colors/ayu.vim
-  colorscheme ayu
+  let g:neosolarized_termtrans=1 
+  let g:neosolarized_italic=1
+  runtime ./colors/NeoSolarized.vim
+  colorscheme NeoSolarized
 endif
 
 " imports
+" plug
 runtime ./plug-config/coc.vim
-runtime ./plug-config/barbar.vim
 runtime ./plug-config/floaterm.vim
 runtime ./plug-config/nerdtree.vim
 runtime ./plug-config/indentline.vim
+runtime ./plug-config/rainbow.vim
+runtime ./plug-config/barbar.vim
+
+" custom mappings
 runtime ./mapping.vim
 
 
@@ -143,4 +152,21 @@ au BufNewFile,BufRead *.tsx setf typescriptreact
 
 " NerdTree config
 nnoremap <leader>m  :NERDTreeToggle<CR>
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+
+
+
 

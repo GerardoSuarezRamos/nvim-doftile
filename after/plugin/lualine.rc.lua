@@ -4,21 +4,21 @@ if (not status) then return end
 lualine.setup {
   options = {
     icons_enabled = true,
-    theme = 'ayu_dark',
+    theme = 'solarized_dark',
     section_separators = {left = '', right = ''},
     component_separators = {left = '', right = ''},
     disabled_filetypes = {}
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch'},
+    lualine_b = {'branch', {'diff', colored = false, symbols = {added = ' ', modified = ' ', removed = ' '}, source =  nil}},
     lualine_c = {{
       'filename',
       file_status = true, -- displays file status (readonly status, modified status)
       path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
     }},
     lualine_x = {
-      { 'diagnostics', sources = {"nvim_lsp"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '} },
+      { 'diagnostics', sources = {"coc"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}, update_in_insert= true},
       'encoding',
       'filetype'
     },
@@ -26,10 +26,13 @@ lualine.setup {
     lualine_z = {'location'}
   },
   inactive_sections = {
-    lualine_a = {},
+    lualine_a = {
+
+    },
     lualine_b = {},
     lualine_c = {{
       'filename',
+      symbols = {unix = '', dos = '', mac = '' },
       file_status = true, -- displays file status (readonly status, modified status)
       path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
     }},
@@ -38,5 +41,5 @@ lualine.setup {
     lualine_z = {}
   },
   tabline = {},
-  extensions = {'fugitive'}
+  extensions = {'fugitive', 'nerdtree'}
 }

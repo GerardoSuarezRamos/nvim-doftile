@@ -51,9 +51,10 @@
     "vue",
     "markdown"
   ],
-  "diagnostic.errorSign": "",
-  "diagnostic.warningSign": "",
-  "diagnostic.infoSign": "",
+  "diagnostic.errorSign": " ",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": " ",
+  "diagnostic.hintSign": " ",
   "diagnostic.enableMessage": "jump",
   "diagnostic.virtualText": true,
   "suggest.noselect": true,
@@ -80,7 +81,7 @@
     "property": "\ue624", //  predator dots
     "field": "\uf9be", // 料left-justified sorted lines
     "unit": "\uf475", //  negative-space ellipsis
-    "event": "\ufacd", // 鬒clock alert / clock with exclamation mark
+    "event": "\ufacd", // 鬒 clock alert / clock with exclamation mark
     "file": "\uf15b", //  file / blank page
     "folder": "\uf07b", //  folder
     "snippet": "\ue60b", //  pair of curly braces
