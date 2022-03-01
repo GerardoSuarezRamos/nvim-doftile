@@ -62,6 +62,9 @@ Plug 'nvim-lua/popup.nvim'
 " lualine
 Plug 'nvim-lualine/lualine.nvim'
 
+" colors for terminal
+Plug 'norcalli/nvim-colorizer.lua'
+
 " icons
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
